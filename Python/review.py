@@ -1,14 +1,12 @@
-import cv2 as cv
+from functions import get_pixeis, get_origem, get_componentes, refinar_curva
 
-img = cv.imread('thresh_tabela.png',0)
-pontos = 0
-for linha in range(img.shape[0]):
-    for coluna in range(img.shape[1]):
-        if img[linha,coluna] == 0:
-            pontos += 1
+PIXEIS = get_pixeis()
+REFS = get_origem(PIXEIS)
 
-print(f'Total de pixeis: {img.size}\nTotal de pontos: {pontos}')
+[EIXO_X, EIXO_Y, CURVA] = get_componentes(PIXEIS, REFS[0]) #eixos X, eixo Y e a CURVA
 
-#referência: canto superior esquerdo
-#coluna 3
-#linha 299
+print(f'Eixo X: {len(EIXO_X)}')
+print(f'Eixo Y: {len(EIXO_Y)}')
+
+CURVA_REFINADA = refinar_curva(EIXO_X, CURVA)
+print(f'Total de pontos Final: {len(CURVA_REFINADA)}')
